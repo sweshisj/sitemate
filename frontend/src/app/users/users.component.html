@@ -1,0 +1,42 @@
+<h1>Welcome to the User Management System</h1>
+
+<div>
+    <h2>User List</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let user of users">
+          <tr>
+            <td>
+              <ng-container *ngIf="user.editMode; else nameView">
+                <input type="text" [(ngModel)]="user.name" class="form-control">
+              </ng-container>
+              <ng-template #nameView>
+                {{ user.name }}
+              </ng-template>
+            </td>
+            <td>
+              <button class="btn btn-primary" (click)="toggleEditMode(user)">
+                {{ user.editMode ? 'Save' : 'Edit' }}
+              </button>
+            </td>
+            <td><button class="btn btn-danger" (click)="deleteUser(user)">Delete</button></td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+<div>
+  <h2>Create New User</h2>
+  <form (submit)="createUser(userInput.value)">
+    <input type="text" #userInput required>
+    <button type="submit">Create User</button>
+  </form>
+</div>
